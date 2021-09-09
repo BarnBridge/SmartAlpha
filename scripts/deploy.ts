@@ -2,7 +2,7 @@ import { ERC20, PoolFactory } from "../typechain";
 import { contractAt } from "../test/helpers/helpers";
 import * as time from "../test/helpers/time";
 
-const factoryAddress = "0xd843d1e6d697C18Ba28e20206bC06bBF23539215";
+const factoryAddress = "0xFb2859365084C653d41d6E1109d6EB3c6a31738B";
 
 const pools = [
     {
@@ -76,7 +76,7 @@ async function main () {
             pool.chainlinkOracleReverse,
         );
 
-        await tx.wait();
+        await tx.wait(2);
 
         const nr = await factory.numberOfPools();
         const p = await factory.pools(nr.sub(1));
