@@ -1,11 +1,18 @@
 import { ethers } from "hardhat";
 import { e8, moveAtTimestamp, tenPow18, tenPow8 } from "./helpers/helpers";
 import { deployContract } from "./helpers/deploy";
-import { AccountingModel, ERC20Mock, OracleMock, OwnableERC20, SeniorRateModel, SmartAlpha } from "../typechain";
+import {
+    AccountingModel,
+    EpochAdvancer,
+    ERC20Mock,
+    OracleMock,
+    OwnableERC20,
+    SeniorRateModel,
+    SmartAlpha,
+} from "../typechain";
 import * as time from "./helpers/time";
 import { BigNumber, Signer } from "ethers";
 import { expect } from "chai";
-import { start } from "repl";
 
 describe("SmartAlpha - liquidity", function () {
     let snapshotId: any;
@@ -101,7 +108,7 @@ describe("SmartAlpha - liquidity", function () {
 
             expect(up).to.equal(tenPow18);
 
-            const juniorProfits = await accountingModel.calcJuniorProfits(startPrice, endPriceUp, up, seniors, seniors+juniors);
+            const juniorProfits = await accountingModel.calcJuniorProfits(startPrice, endPriceUp, up, seniors, seniors + juniors);
             expect(juniorProfits).to.equal(0);
         });
     });
@@ -128,6 +135,21 @@ describe("SmartAlpha - liquidity", function () {
             await expect(sa.advanceEpoch()).to.not.be.reverted;
 
             expect(await sa.epochJuniorLiquidity()).to.equal(amount);
+        });
+    });
+
+    describe("Epoch advancer", () => {
+        it("works", async () => {
+            const a = (await deployContract("EpochAdvancer", [[]])) as EpochAdvancer;
+
+            await expect(a.addPool(sa.address)).to.not.be.reverted;
+            expect(await a.numberOfPools()).to.equal(1);
+            expect(await a.pools(0)).to.equal(sa.address);
+
+            await moveAtEpoch(1);
+
+            await expect(a.advanceEpochs()).to.not.be.reverted;
+            expect(await sa.epoch()).to.equal(1);
         });
     });
 
