@@ -2,7 +2,7 @@ import { ERC20, PoolFactory } from "../typechain";
 import { contractAt } from "../test/helpers/helpers";
 import * as time from "../test/helpers/time";
 
-const factoryAddress = "0xc40a66AFB908789341A58B8423F89fE2cb7Dc1f9";
+const factoryAddress = "0x7a40cE00875Ce3033517516ac690E9E91fB4BDaF";
 
 const pools = [
     {
@@ -13,7 +13,7 @@ const pools = [
         poolToken: "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
         chainlinkAggregator: "0xF9680D99D6C9589e2a93a78A04A279e509205945",
         chainlinkOracleReverse: false,
-        epoch1Start: Date.UTC(2021, 8, 13, 14),
+        epoch1Start: Date.UTC(2021, 8, 27, 14),
         epochDuration: 7 * time.day,
     },
     {
@@ -24,7 +24,7 @@ const pools = [
         poolToken: "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6",
         chainlinkAggregator: "0xDE31F8bFBD8c84b5360CFACCa3539B938dd78ae6",
         chainlinkOracleReverse: false,
-        epoch1Start: Date.UTC(2021, 8, 13, 14),
+        epoch1Start: Date.UTC(2021, 8, 27, 14),
         epochDuration: 7 * time.day,
     },
     {
@@ -35,7 +35,7 @@ const pools = [
         poolToken: "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
         chainlinkAggregator: "0xA338e0492B2F944E9F8C0653D3AD1484f2657a37",
         chainlinkOracleReverse: true,
-        epoch1Start: Date.UTC(2021, 9, 13, 14),
+        epoch1Start: Date.UTC(2021, 8, 27, 14),
         epochDuration: 7 * time.day,
     },
     {
@@ -46,7 +46,7 @@ const pools = [
         poolToken: "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6",
         chainlinkAggregator: "0xA338e0492B2F944E9F8C0653D3AD1484f2657a37",
         chainlinkOracleReverse: false,
-        epoch1Start: Date.UTC(2021, 8, 13, 14),
+        epoch1Start: Date.UTC(2021, 8, 27, 14),
         epochDuration: 7 * time.day,
     },
     {
@@ -57,7 +57,7 @@ const pools = [
         poolToken: "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
         chainlinkAggregator: "0xAB594600376Ec9fD91F8e885dADF0CE036862dE0",
         chainlinkOracleReverse: false,
-        epoch1Start: Date.UTC(2021, 8, 13, 14),
+        epoch1Start: Date.UTC(2021, 8, 27, 14),
         epochDuration: 7 * time.day,
     },
 ];
