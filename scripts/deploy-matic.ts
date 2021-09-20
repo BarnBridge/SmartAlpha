@@ -8,7 +8,7 @@ const pools = [
     {
         poolName: "WETH-USD-1w",
         oracleAsset: "USD",
-        dao: "0xB0d6177e4fD20C50916c6Edb54f7A45c5a5B2610",
+        dao: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
         guardian: "0xB0d6177e4fD20C50916c6Edb54f7A45c5a5B2610",
         poolToken: "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
         chainlinkAggregator: "0xF9680D99D6C9589e2a93a78A04A279e509205945",
@@ -19,7 +19,7 @@ const pools = [
     {
         poolName: "WBTC-USD-1w",
         oracleAsset: "USD",
-        dao: "0xB0d6177e4fD20C50916c6Edb54f7A45c5a5B2610",
+        dao: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
         guardian: "0xB0d6177e4fD20C50916c6Edb54f7A45c5a5B2610",
         poolToken: "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6",
         chainlinkAggregator: "0xDE31F8bFBD8c84b5360CFACCa3539B938dd78ae6",
@@ -30,7 +30,7 @@ const pools = [
     {
         poolName: "WMATIC-USD-1w",
         oracleAsset: "USD",
-        dao: "0xB0d6177e4fD20C50916c6Edb54f7A45c5a5B2610",
+        dao: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
         guardian: "0xB0d6177e4fD20C50916c6Edb54f7A45c5a5B2610",
         poolToken: "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
         chainlinkAggregator: "0xAB594600376Ec9fD91F8e885dADF0CE036862dE0",
