@@ -6,47 +6,47 @@ const factoryAddress = "0xFb2859365084C653d41d6E1109d6EB3c6a31738B";
 
 const pools = [
     {
-        poolName: "WETH-USD-1w",
+        poolName: "stkAAVE-USD-1w",
         oracleAsset: "USD",
         dao: "0x89d652C64d7CeE18F5DF53B24d9D29D130b18798",
         guardian: "0x54e6a2f9991b6b6d57d152d21427e8cb80b25e91",
-        poolToken: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-        chainlinkAggregator: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+        poolToken: "0x4da27a545c0c5b758a6ba100e3a049001de870f5",
+        chainlinkAggregator: "0x547a514d5e3769680Ce22B2361c10Ea13619e8a9",
         chainlinkOracleReverse: false,
-        epoch1Start: Date.UTC(2021, 8, 13, 14),
+        epoch1Start: Date.UTC(2021, 8, 27, 14),
         epochDuration: 7 * time.day,
     },
     {
-        poolName: "WBTC-USD-1w",
+        poolName: "UNI-USD-1w",
         oracleAsset: "USD",
         dao: "0x89d652C64d7CeE18F5DF53B24d9D29D130b18798",
         guardian: "0x54e6a2f9991b6b6d57d152d21427e8cb80b25e91",
-        poolToken: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
-        chainlinkAggregator: "0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+        poolToken: "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+        chainlinkAggregator: "0x553303d460EE0afB37EdFf9bE42922D8FF63220e",
         chainlinkOracleReverse: false,
-        epoch1Start: Date.UTC(2021, 8, 13, 14),
+        epoch1Start: Date.UTC(2021, 8, 27, 14),
         epochDuration: 7 * time.day,
     },
     {
-        poolName: "WETH-BTC-1w",
-        oracleAsset: "BTC",
+        poolName: "LINK-USD-1w",
+        oracleAsset: "USD",
         dao: "0x89d652C64d7CeE18F5DF53B24d9D29D130b18798",
         guardian: "0x54e6a2f9991b6b6d57d152d21427e8cb80b25e91",
-        poolToken: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-        chainlinkAggregator: "0xdeb288F737066589598e9214E782fa5A8eD689e8",
-        chainlinkOracleReverse: true,
-        epoch1Start: Date.UTC(2021, 8, 13, 14),
+        poolToken: "0x514910771af9ca656af840dff83e8264ecf986ca",
+        chainlinkAggregator: "0x2c1d072e956AFFC0D435Cb7AC38EF18d24d9127c",
+        chainlinkOracleReverse: false,
+        epoch1Start: Date.UTC(2021, 8, 27, 14),
         epochDuration: 7 * time.day,
     },
     {
-        poolName: "WBTC-ETH-1w",
-        oracleAsset: "ETH",
+        poolName: "xSUSHI-USD-1w",
+        oracleAsset: "USD",
         dao: "0x89d652C64d7CeE18F5DF53B24d9D29D130b18798",
         guardian: "0x54e6a2f9991b6b6d57d152d21427e8cb80b25e91",
-        poolToken: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
-        chainlinkAggregator: "0xdeb288F737066589598e9214E782fa5A8eD689e8",
+        poolToken: "0x8798249c2E607446EfB7Ad49eC89dD1865Ff4272",
+        chainlinkAggregator: "0xCc70F09A6CC17553b2E31954cD36E4A2d89501f7",
         chainlinkOracleReverse: false,
-        epoch1Start: Date.UTC(2021, 8, 13, 14),
+        epoch1Start: Date.UTC(2021, 8, 27, 14),
         epochDuration: 7 * time.day,
     },
 ];
@@ -76,7 +76,7 @@ async function main () {
             pool.chainlinkOracleReverse,
         );
 
-        await tx.wait(2);
+        const receipt = await tx.wait(2);
 
         const nr = await factory.numberOfPools();
         const p = await factory.pools(nr.sub(1));
@@ -102,7 +102,7 @@ async function main () {
   "accountingModelAddress":"${p.accountingModel}",
   "epoch1Start": ${Math.floor(pool.epoch1Start / 1000)},
   "epochDuration": ${pool.epochDuration},
-  "startAtBlock": ${tx.blockNumber}
+  "startAtBlock": ${receipt.blockNumber}
 },
         `);
     }
