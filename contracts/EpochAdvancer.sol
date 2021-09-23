@@ -34,8 +34,31 @@ contract EpochAdvancer is Ownable {
             ISmartAlpha sa = ISmartAlpha(pools[i]);
 
             if (sa.getCurrentEpoch() > sa.epoch()) {
+                if (gasleft() < 400_000) {
+                    break;
+                }
+
                 sa.advanceEpoch();
             }
         }
+    }
+
+    function checkUpkeep(bytes calldata /* checkData */) external view returns (bool, bytes memory) {
+        bool upkeepNeeded;
+
+        for (uint256 i = 0; i < pools.length; i++) {
+            ISmartAlpha sa = ISmartAlpha(pools[i]);
+
+            if (sa.getCurrentEpoch() > sa.epoch()) {
+                upkeepNeeded = true;
+                break;
+            }
+        }
+
+        return (upkeepNeeded, "");
+    }
+
+    function performUpkeep(bytes calldata /* performData */) external {
+        advanceEpochs();
     }
 }

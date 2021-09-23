@@ -13,6 +13,7 @@ import {
 import * as time from "./helpers/time";
 import { BigNumber, Signer } from "ethers";
 import { expect } from "chai";
+import { Bytes } from "ethers/lib/utils";
 
 describe("SmartAlpha - liquidity", function () {
     let snapshotId: any;
@@ -147,6 +148,8 @@ describe("SmartAlpha - liquidity", function () {
             expect(await a.pools(0)).to.equal(sa.address);
 
             await moveAtEpoch(1);
+
+            expect((await a.checkUpkeep("0x00"))[0]).to.be.true;
 
             await expect(a.advanceEpochs()).to.not.be.reverted;
             expect(await sa.epoch()).to.equal(1);
