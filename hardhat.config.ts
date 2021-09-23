@@ -9,6 +9,7 @@ import "solidity-coverage";
 import "hardhat-gas-reporter";
 import "@nomiclabs/hardhat-solhint";
 import "hardhat-contract-sizer";
+import "hardhat-deploy";
 
 // This is a sample Buidler task. To learn how to create your own go to
 // https://buidler.dev/guides/create-task.html
@@ -45,6 +46,9 @@ const cfg: HardhatUserConfig = {
                 runs: 2,
             },
         },
+    },
+    namedAccounts: {
+        deployer: 0,
     },
 
     defaultNetwork: "hardhat",
