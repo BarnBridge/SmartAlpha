@@ -9,19 +9,15 @@ const pools = [
 ];
 
 const dao = "0x4cAE362D7F227e3d306f70ce4878E245563F3069";
-const feesPct = tenPow18.mul(5).div(10).div(100);
 
 async function main () {
     for (const p of pools) {
         const sa = (await contractAt("SmartAlpha", p)) as SmartAlpha;
 
-        const tx = await sa.setFeesOwner(dao);
+        const tx = await sa.transferDAO(dao);
         await tx.wait(1);
 
-        const tx1 = await sa.setFeesPercentage(feesPct);
-        await tx1.wait(1);
-
-        console.log(`Pool ${p} set fees owner to ${dao}, fees percentage to ${feesPct}`);
+        console.log(`Pool ${p} transferred DAO to ${dao}`);
     }
 }
 
