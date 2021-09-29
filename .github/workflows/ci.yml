@@ -22,6 +22,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm install
+    - run: npm install --global yarn
+    - run: yarn install --frozen-lockfile
     - run: cp ./config.sample.ts ./config.ts
-    - run: npm run compile-and-test
+    - run: yarn run compile-and-test
