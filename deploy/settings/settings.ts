@@ -45,9 +45,9 @@ export function settings (networkName: string): Settings {
         },
         // https://docs.chain.link/docs/avalanche-price-feeds/#Avalanche%20Testnet
         "fuji": {
-            daoAddress: "0xB011D306D36c396847bA42b1c7AEb8E96C540d9a",
+            daoAddress: "0x0be4DD738E9818C7cB2C86dacEc1542EAc3B81B8",
             guardianAddress: "0xB011D306D36c396847bA42b1c7AEb8E96C540d9a",
-            feesOwner: "0xB011D306D36c396847bA42b1c7AEb8E96C540d9a",
+            feesOwner: "0x0be4DD738E9818C7cB2C86dacEc1542EAc3B81B8",
             feesPercent: pointFivePercent,
             pools: [
                 {
