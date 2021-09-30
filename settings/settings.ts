@@ -70,6 +70,52 @@ export function settings (networkName: string): Settings {
                 },
             ],
         },
+        // https://docs.chain.link/docs/avalanche-price-feeds/#Avalanche%20Mainnet
+        // https://github.com/pangolindex/tokenlists/blob/main/ab.tokenlist.json
+        "avalanche": {
+            daoAddress: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
+            guardianAddress: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
+            feesOwner: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
+            feesPercent: pointFivePercent,
+            pools: [
+                {
+                    poolName: "WETH-USD-1w",
+                    oracleAsset: "USD",
+                    poolToken: "0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
+                    chainlinkAggregator: "0x976B3D034E162d8bD72D6b9C989d545b839003b0",
+                    chainlinkOracleReverse: false,
+                    epoch1Start: Date.UTC(2021, 9, 4, 14),
+                    epochDuration: 7 * time.day,
+                },
+                {
+                    poolName: "WBTC-USD-1w",
+                    oracleAsset: "USD",
+                    poolToken: "0x50b7545627a5162F82A992c33b87aDc75187B218",
+                    chainlinkAggregator: "0x2779D32d5166BAaa2B2b658333bA7e6Ec0C65743",
+                    chainlinkOracleReverse: false,
+                    epoch1Start:  Date.UTC(2021, 9, 4, 14),
+                    epochDuration: 7 * time.day,
+                },
+                {
+                    poolName: "WAVAX-USD-1w",
+                    oracleAsset: "USD",
+                    poolToken: "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
+                    chainlinkAggregator: "0x0A77230d17318075983913bC2145DB16C7366156",
+                    chainlinkOracleReverse: false,
+                    epoch1Start:  Date.UTC(2021, 9, 4, 14),
+                    epochDuration: 7 * time.day,
+                },
+                {
+                    poolName: "AAVE-USD-1w",
+                    oracleAsset: "USD",
+                    poolToken: "0x63a72806098Bd3D9520cC43356dD78afe5D386D9",
+                    chainlinkAggregator: "0x3CA13391E9fb38a75330fb28f8cc2eB3D9ceceED",
+                    chainlinkOracleReverse: false,
+                    epoch1Start:  Date.UTC(2021, 9, 4, 14),
+                    epochDuration: 7 * time.day,
+                },
+            ],
+        },
     } as SettingsInterface;
 
     return cfg[networkName];
