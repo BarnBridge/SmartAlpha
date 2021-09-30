@@ -2,7 +2,7 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { ERC20, PoolFactory, SmartAlpha } from "../typechain";
 import * as time from "../test/helpers/time";
-import { settings } from "./settings/settings";
+import { settings } from "../settings/settings";
 import { BigNumber } from "ethers";
 import { formatEther } from "ethers/lib/utils";
 
@@ -13,11 +13,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
     const cfg = settings(hre.network.name);
 
-    const pools = [
-
-    ];
-
-    console.log(`Will deploy ${pools.length} pools ...`);
+    console.log(`Will deploy ${cfg.pools.length} pools ...`);
 
     const factory = await ethers.getContract("PoolFactory") as PoolFactory;
     const poolArtifact = await deployments.getExtendedArtifact("SmartAlpha");

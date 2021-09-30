@@ -1,7 +1,7 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
-import { tenPow18 } from "../../test/helpers/helpers";
+import { tenPow18 } from "../test/helpers/helpers";
 import { BigNumber } from "ethers";
-import * as time from "../../test/helpers/time";
+import * as time from "../test/helpers/time";
 
 interface SettingsInterface {
     [key: string]: Settings;
