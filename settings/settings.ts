@@ -116,6 +116,23 @@ export function settings (networkName: string): Settings {
                 },
             ],
         },
+        "bsctestnet": {
+            daoAddress: "0xB011D306D36c396847bA42b1c7AEb8E96C540d9a",
+            guardianAddress: "0xB011D306D36c396847bA42b1c7AEb8E96C540d9a",
+            feesOwner: "0xB011D306D36c396847bA42b1c7AEb8E96C540d9a",
+            feesPercent: pointFivePercent,
+            pools: [
+                {
+                    poolName: "WBNB-USD-30m",
+                    oracleAsset: "USD",
+                    poolToken: "0xae13d989dac2f0debff460ac112a837c89baa7cd",
+                    chainlinkAggregator: "0x2514895c72f50D8bd4B4F9b1110F0D6bD2c97526",
+                    chainlinkOracleReverse: false,
+                    epoch1Start:  Date.UTC(2021, 9, 4, 14),
+                    epochDuration: 30 * time.minute,
+                },
+            ],
+        },
     } as SettingsInterface;
 
     return cfg[networkName];

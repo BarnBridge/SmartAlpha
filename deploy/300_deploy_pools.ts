@@ -5,6 +5,7 @@ import * as time from "../test/helpers/time";
 import { settings } from "../settings/settings";
 import { BigNumber } from "ethers";
 import { formatEther } from "ethers/lib/utils";
+import { ExtendedArtifact } from "hardhat-deploy/dist/types";
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const { ethers, deployments, getNamedAccounts } = hre;
@@ -17,6 +18,11 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
     const factory = await ethers.getContract("PoolFactory") as PoolFactory;
     const poolArtifact = await deployments.getExtendedArtifact("SmartAlpha");
+    const rateModelArtifact = await deployments.getExtendedArtifact("SeniorRateModelV3");
+    const accountingModelArtifact = await deployments.getExtendedArtifact("AccountingModel");
+    const oracleArtifact = await deployments.getExtendedArtifact("ChainlinkOracle");
+    const oracleReverseArtifact = await deployments.getExtendedArtifact("ChainlinkOracleReverse");
+    const tokenArtifact = await deployments.getExtendedArtifact("OwnableERC20");
 
     for (const pool of cfg.pools) {
         let poolAddress;
@@ -46,17 +52,63 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
             const nr = await factory.numberOfPools();
             const p = await factory.pools(nr.sub(1));
 
-            save(pool.poolName, {
-                abi: poolArtifact.abi,
-                address: p.smartAlpha,
-                bytecode: poolArtifact.bytecode,
-                args: [factory.address, cfg.guardianAddress],
-                transactionHash: tx.hash,
-                metadata: poolArtifact.metadata,
-            });
-
             const token = (await ethers.getContractAt("ERC20", pool.poolToken)) as ERC20;
+            const tokenDecimals = await token.decimals();
 
+            // save deployments info
+            await saveDeployment(
+                save,
+                pool.poolName,
+                p.smartAlpha,
+                [factory.address, cfg.guardianAddress],
+                poolArtifact,
+            );
+
+            await saveDeployment(
+                save,
+                pool.poolName + "-AccountingModel",
+                p.accountingModel,
+                [],
+                accountingModelArtifact,
+            );
+
+            await saveDeployment(
+                save,
+                pool.poolName + "-SeniorRateModel",
+                p.seniorRateModel,
+                [],
+                rateModelArtifact,
+            );
+
+            let cloa = oracleArtifact;
+            if (pool.chainlinkOracleReverse) {
+                cloa = oracleReverseArtifact;
+            }
+
+            await saveDeployment(
+                save,
+                pool.poolName + "-Oracle",
+                p.oracle,
+                [pool.chainlinkAggregator],
+                cloa,
+            );
+
+            await saveDeployment(
+                save,
+                pool.poolName + "-Junior",
+                p.juniorToken,
+                [juniorTokenName, juniorTokenSymbol, tokenDecimals],
+                tokenArtifact,
+            );
+            await saveDeployment(
+                save,
+                pool.poolName + "-Senior",
+                p.seniorToken,
+                [seniorTokenName, seniorTokenSymbol, tokenDecimals],
+                tokenArtifact,
+            );
+
+            // output info
             console.log(`
 {
   "poolName": "${pool.poolName}",
@@ -64,7 +116,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   "poolToken": {
     "address": "${pool.poolToken}",
     "symbol": "${await token.symbol()}",
-    "decimals": ${await token.decimals()}
+    "decimals": ${tokenDecimals}
   },
   "juniorTokenAddress": "${p.juniorToken}",
   "juniorTokenSymbol" : "${juniorTokenSymbol}",
@@ -87,6 +139,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
             poolAddress = oldDeployment.address;
         }
 
+        // updating settings
         const poolContract = (await ethers.getContractAt("SmartAlpha", poolAddress)) as SmartAlpha;
 
         // set fees owner
@@ -124,3 +177,14 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 };
 export default func;
 func.tags = ["SmartAlphaPools"];
+
+// TODO move this to somewhere better
+const saveDeployment = async function (saveFn: any, name: string, address: string, args: any, artifact: ExtendedArtifact) {
+    await saveFn(name, {
+        abi: artifact.abi,
+        address: address,
+        bytecode: artifact.bytecode,
+        args: args,
+        metadata: artifact.metadata,
+    });
+};
