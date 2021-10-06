@@ -116,6 +116,7 @@ export function settings (networkName: string): Settings {
                 },
             ],
         },
+        // https://docs.chain.link/docs/binance-smart-chain-addresses/#BSC%20Testnet
         "bsctestnet": {
             daoAddress: "0xB011D306D36c396847bA42b1c7AEb8E96C540d9a",
             guardianAddress: "0xB011D306D36c396847bA42b1c7AEb8E96C540d9a",
@@ -130,6 +131,52 @@ export function settings (networkName: string): Settings {
                     chainlinkOracleReverse: false,
                     epoch1Start:  Date.UTC(2021, 9, 4, 14),
                     epochDuration: 30 * time.minute,
+                },
+            ],
+        },
+        // https://docs.chain.link/docs/binance-smart-chain-addresses/#BSC%20Mainnet
+        // https://api.binance.org/bridge/api/v2/tokens
+        "bsc": {
+            daoAddress: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
+            guardianAddress: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
+            feesOwner: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
+            feesPercent: pointFivePercent,
+            pools: [
+                {
+                    poolName: "ETH-USD-1w",
+                    oracleAsset: "USD",
+                    poolToken: "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+                    chainlinkAggregator: "0x9ef1B8c0E4F7dc8bF5719Ea496883DC6401d5b2e",
+                    chainlinkOracleReverse: false,
+                    epoch1Start: Date.UTC(2021, 9, 11, 14),
+                    epochDuration: 7 * time.day,
+                },
+                {
+                    poolName: "BTCB-USD-1w",
+                    oracleAsset: "USD",
+                    poolToken: "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
+                    chainlinkAggregator: "0x264990fbd0A4796A3E3d8E37C4d5F87a3aCa5Ebf",
+                    chainlinkOracleReverse: false,
+                    epoch1Start:  Date.UTC(2021, 9, 11, 14),
+                    epochDuration: 7 * time.day,
+                },
+                {
+                    poolName: "WBNB-USD-1w",
+                    oracleAsset: "USD",
+                    poolToken: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+                    chainlinkAggregator: "0x0567F2323251f0Aab15c8dFb1967E4e8A7D42aeE",
+                    chainlinkOracleReverse: false,
+                    epoch1Start:  Date.UTC(2021, 9, 11, 14),
+                    epochDuration: 7 * time.day,
+                },
+                {
+                    poolName: "CAKE-USD-1w",
+                    oracleAsset: "USD",
+                    poolToken: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+                    chainlinkAggregator: "0xB6064eD41d4f67e353768aA239cA86f4F73665a1",
+                    chainlinkOracleReverse: false,
+                    epoch1Start:  Date.UTC(2021, 9, 11, 14),
+                    epochDuration: 7 * time.day,
                 },
             ],
         },
