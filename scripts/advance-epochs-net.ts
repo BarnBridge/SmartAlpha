@@ -1,9 +1,7 @@
 import hre from "hardhat";
-import { EpochAdvancer, PoolFactory } from "../typechain";
+import { EpochAdvancer } from "../typechain";
 
-const advancer = "0xa899Eeb62ada17e7C0A2799865Ec668111e81dd1";
-
-const { ethers, deployments, getNamedAccounts } = hre;
+const { ethers } = hre;
 
 (async () => {
     const advancer = await ethers.getContract("EpochAdvancer") as EpochAdvancer;
