@@ -180,6 +180,24 @@ export function settings (networkName: string): Settings {
                 },
             ],
         },
+        // https://docs.chain.link/docs/arbitrum-price-feeds/#Arbitrum%20Rinkeby
+        "arbitrumrinkeby": {
+            daoAddress: "0xB011D306D36c396847bA42b1c7AEb8E96C540d9a",
+            guardianAddress: "0xB011D306D36c396847bA42b1c7AEb8E96C540d9a",
+            feesOwner: "0xB011D306D36c396847bA42b1c7AEb8E96C540d9a",
+            feesPercent: pointFivePercent,
+            pools: [
+                {
+                    poolName: "WETH-USD-30m",
+                    oracleAsset: "USD",
+                    poolToken: "0xb47e6a5f8b33b3f17603c83a0535a9dcd7e32681",
+                    chainlinkAggregator: "0x5f0423B1a6935dc5596e7A24d98532b67A0AeFd8",
+                    chainlinkOracleReverse: false,
+                    epoch1Start:  Date.UTC(2021, 9, 13, 14),
+                    epochDuration: 30 * time.minute,
+                },
+            ],
+        },
     } as SettingsInterface;
 
     return cfg[networkName];
