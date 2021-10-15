@@ -198,6 +198,60 @@ export function settings (networkName: string): Settings {
                 },
             ],
         },
+        // https://docs.chain.link/docs/arbitrum-price-feeds/#Arbitrum%20Rinkeby
+        "arbitrum": {
+            daoAddress: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
+            guardianAddress: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
+            feesOwner: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
+            feesPercent: pointFivePercent,
+            pools: [
+                {
+                    poolName: "WETH-USD-1w",
+                    oracleAsset: "USD",
+                    poolToken: "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+                    chainlinkAggregator: "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612",
+                    chainlinkOracleReverse: false,
+                    epoch1Start: Date.UTC(2021, 9, 18, 14),
+                    epochDuration: 7 * time.day,
+                },
+                {
+                    poolName: "WBTC-USD-1w",
+                    oracleAsset: "USD",
+                    poolToken: "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+                    chainlinkAggregator: "0x6ce185860a4963106506C203335A2910413708e9",
+                    chainlinkOracleReverse: false,
+                    epoch1Start:  Date.UTC(2021, 9, 18, 14),
+                    epochDuration: 7 * time.day,
+                },
+                {
+                    poolName: "UNI-USD-1w",
+                    oracleAsset: "USD",
+                    poolToken: "0xfa7f8980b0f1e64a2062791cc3b0871572f1f7f0",
+                    chainlinkAggregator: "0x9C917083fDb403ab5ADbEC26Ee294f6EcAda2720",
+                    chainlinkOracleReverse: false,
+                    epoch1Start:  Date.UTC(2021, 9, 18, 14),
+                    epochDuration: 7 * time.day,
+                },
+                {
+                    poolName: "LINK-USD-1w",
+                    oracleAsset: "USD",
+                    poolToken: "0xf97f4df75117a78c1a5a0dbb814af92458539fb4",
+                    chainlinkAggregator: "0x86E53CF1B870786351Da77A57575e79CB55812CB",
+                    chainlinkOracleReverse: false,
+                    epoch1Start:  Date.UTC(2021, 9, 18, 14),
+                    epochDuration: 7 * time.day,
+                },
+                {
+                    poolName: "SUSHI-USD-1w",
+                    oracleAsset: "USD",
+                    poolToken: "0xd4d42f0b6def4ce0383636770ef773390d85c61a",
+                    chainlinkAggregator: "0xb2A8BA74cbca38508BA1632761b56C897060147C",
+                    chainlinkOracleReverse: false,
+                    epoch1Start:  Date.UTC(2021, 9, 18, 14),
+                    epochDuration: 7 * time.day,
+                },
+            ],
+        },
     } as SettingsInterface;
 
     return cfg[networkName];
