@@ -47,6 +47,7 @@ const cfg: HardhatUserConfig = {
             },
         },
     },
+
     namedAccounts: {
         deployer: 0,
     },
