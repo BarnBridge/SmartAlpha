@@ -9,7 +9,7 @@ const { ethers } = hre;
     const poolCount = await advancer.numberOfPools();
     const gasLimit = 400_004 * poolCount.toNumber();
 
-    const tx = await advancer.advanceEpochs({ gasLimit });
+    const tx = await advancer.advanceEpochs({ gasLimit: gasLimit });
 
     await tx.wait(1);
     console.log("Done", tx.hash);
