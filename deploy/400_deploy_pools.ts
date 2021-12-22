@@ -1,6 +1,6 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import { ERC20, PoolFactory, SmartAlpha } from "../typechain";
+import { EpochAdvancer, ERC20, PoolFactory, SmartAlpha } from "../typechain";
 import * as time from "../test/helpers/time";
 import { settings } from "../settings/settings";
 import { BigNumber } from "ethers";
@@ -23,6 +23,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const oracleArtifact = await deployments.getExtendedArtifact("ChainlinkOracle");
     const oracleReverseArtifact = await deployments.getExtendedArtifact("ChainlinkOracleReverse");
     const tokenArtifact = await deployments.getExtendedArtifact("OwnableERC20");
+
+    const advancerPools = [];
 
     for (const pool of cfg.pools) {
         let poolAddress;
@@ -47,7 +49,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
                 pool.chainlinkOracleReverse,
             );
 
-            const receipt = await tx.wait(2);
+            const receipt = await tx.wait(3);
 
             const nr = await factory.numberOfPools();
             const p = await factory.pools(nr.sub(1));
@@ -107,6 +109,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
                 [seniorTokenName, seniorTokenSymbol, tokenDecimals],
                 tokenArtifact,
             );
+
+            // add to epoch advancer
+            advancerPools.push(p.smartAlpha);
 
             // output info
             console.log(`
@@ -173,6 +178,13 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         }
     }
 
+    // add new pools to advancer
+    if (advancerPools.length > 0) {
+        console.log("adding pools to advancer", advancerPools);
+        const advancer = (await ethers.getContract("EpochAdvancer")) as EpochAdvancer;
+        const tx = await advancer.addPools(advancerPools);
+        await tx.wait(3);
+    }
     console.log("Done");
 };
 export default func;

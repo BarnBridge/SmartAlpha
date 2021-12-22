@@ -252,6 +252,32 @@ export function settings (networkName: string): Settings {
                 },
             ],
         },
+        // https://docs.chain.link/docs/optimism-price-feeds/#Optimism%20Kovan
+        "optimistickovan": {
+            daoAddress: "0xB011D306D36c396847bA42b1c7AEb8E96C540d9a",
+            guardianAddress: "0xB011D306D36c396847bA42b1c7AEb8E96C540d9a",
+            feesOwner: "0xB011D306D36c396847bA42b1c7AEb8E96C540d9a",
+            feesPercent: pointFivePercent,
+            pools: [
+                {
+                    poolName: "WETH-USD-30m",
+                    oracleAsset: "USD",
+                    poolToken: "0x4200000000000000000000000000000000000006",
+                    chainlinkAggregator: "0xCb7895bDC70A1a1Dce69b689FD7e43A627475A06",
+                    chainlinkOracleReverse: false,
+                    epoch1Start:  Date.UTC(2021, 11, 9, 10),
+                    epochDuration: 30 * time.minute,
+                },
+            ],
+        },
+        // https://docs.chain.link/docs/optimism-price-feeds/#Optimism%20Mainnet
+        "optimistic": {
+            daoAddress: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
+            guardianAddress: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
+            feesOwner: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
+            feesPercent: pointFivePercent,
+            pools: [],
+        },
     } as SettingsInterface;
 
     return cfg[networkName];
