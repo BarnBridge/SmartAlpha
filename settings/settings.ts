@@ -178,6 +178,15 @@ export function settings (networkName: string): Settings {
                     epoch1Start:  Date.UTC(2021, 9, 11, 14),
                     epochDuration: 7 * time.day,
                 },
+                {
+                    poolName: "FLOKI-USD-1w",
+                    oracleAsset: "USD",
+                    poolToken: "0x2b3f34e9d4b127797ce6244ea341a83733ddd6e4",
+                    chainlinkAggregator: "0x19018Cb4e5228A433CA0469e11E04AD47679B97D",
+                    chainlinkOracleReverse: false,
+                    epoch1Start: Date.UTC(2021, 11, 27, 14),
+                    epochDuration: 7 * time.day,
+                },
             ],
         },
         // https://docs.chain.link/docs/arbitrum-price-feeds/#Arbitrum%20Rinkeby
