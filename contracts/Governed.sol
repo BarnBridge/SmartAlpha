@@ -20,7 +20,7 @@ abstract contract Governed is SmartAlphaEvents {
     ISeniorRateModel public seniorRateModel;
     IAccountingModel public accountingModel;
 
-    uint256 public constant MAX_FEES_PERCENTAGE = 100 * 10 ** 16; // 100% * 10^18 - fees ceiling disabled
+    uint256 public constant MAX_FEES_PERCENTAGE = 100 * 10 ** 16;
     address public feesOwner;
     uint256 public feesPercentage;
 
