@@ -137,7 +137,7 @@ abstract contract Governed is SmartAlphaEvents {
         if (percentage > 0) {
             require(feesOwner != address(0), "no fees owner");
         }
-        require(percentage < MAX_FEES_PERCENTAGE, "max percentage exceeded");
+        require(percentage <= MAX_FEES_PERCENTAGE, "max percentage exceeded");
 
         emit SetFeesPercentage(feesPercentage, percentage);
 

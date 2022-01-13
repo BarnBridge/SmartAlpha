@@ -279,7 +279,7 @@ describe("Governance", () => {
         it("reverts if fee percentage is more than max", async () => {
             await expect(sa.connect(happyPirate).setFeesOwner(happyPirateAddress))
                 .to.not.be.reverted;
-            await expect(sa.connect(happyPirate).setFeesPercentage(tenPow18))
+            await expect(sa.connect(happyPirate).setFeesPercentage(tenPow18.add(1)))
                 .to.be.revertedWith("max percentage exceeded");
         });
 
