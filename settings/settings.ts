@@ -292,7 +292,7 @@ export function settings (networkName: string): Settings {
                     poolToken: "0x4200000000000000000000000000000000000006",
                     chainlinkAggregator: "0xA969bEB73d918f6100163Cd0fba3C586C269bee1",
                     chainlinkOracleReverse: false,
-                    epoch1Start: Date.UTC(2022, 0, 17, 14),
+                    epoch1Start: Date.UTC(2022, 0, 24, 14),
                     epochDuration: 7 * time.day,
                 },
                 {
@@ -301,7 +301,7 @@ export function settings (networkName: string): Settings {
                     poolToken: "0x68f180fcce6836688e9084f035309e29bf0a2095",
                     chainlinkAggregator: "0xc326371d4D866C6Ff522E69298e36Fe75797D358",
                     chainlinkOracleReverse: false,
-                    epoch1Start: Date.UTC(2022, 0, 17, 14),
+                    epoch1Start: Date.UTC(2022, 0, 24, 14),
                     epochDuration: 7 * time.day,
                 },
                 {
@@ -310,7 +310,7 @@ export function settings (networkName: string): Settings {
                     poolToken: "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
                     chainlinkAggregator: "0x588e1f339910c21c7E4864048E37017AafF4cBc6",
                     chainlinkOracleReverse: false,
-                    epoch1Start: Date.UTC(2022, 0, 17, 14),
+                    epoch1Start: Date.UTC(2022, 0, 24, 14),
                     epochDuration: 7 * time.day,
                 },
                 {
@@ -319,7 +319,7 @@ export function settings (networkName: string): Settings {
                     poolToken: "0x350a791bfc2c21f9ed5d10980dad2e2638ffa7f6",
                     chainlinkAggregator: "0x74d6B50283AC1D651f9Afdc33521e4c1E3332b78",
                     chainlinkOracleReverse: false,
-                    epoch1Start: Date.UTC(2022, 0, 17, 14),
+                    epoch1Start: Date.UTC(2022, 0, 24, 14),
                     epochDuration: 7 * time.day,
                 },
             ],

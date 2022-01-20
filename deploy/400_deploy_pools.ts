@@ -49,7 +49,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
                 pool.chainlinkOracleReverse,
             );
 
-            const receipt = await tx.wait(3);
+            const receipt = await tx.wait(10);
 
             const nr = await factory.numberOfPools();
             const p = await factory.pools(nr.sub(1));
@@ -152,7 +152,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         if (currentFeesOwner !== cfg.feesOwner) {
             console.info(`${pool.poolName}: fees owner set to ${currentFeesOwner}, setting to ${cfg.feesOwner}`);
             const feesOwnerTx = await poolContract.setFeesOwner(cfg.feesOwner);
-            await feesOwnerTx.wait();
+            await feesOwnerTx.wait(10);
         } else {
             console.info(`${pool.poolName}: fees owner already set to ${currentFeesOwner}`);
         }
@@ -162,7 +162,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         if (!currentFees.eq(cfg.feesPercent)) {
             console.info(`${pool.poolName}: fees set to ${formatEther(currentFees)}, setting to ${formatEther(cfg.feesPercent)}`);
             const feesTx = await poolContract.setFeesPercentage(cfg.feesPercent);
-            await feesTx.wait();
+            await feesTx.wait(10);
         } else {
             console.info(`${pool.poolName}: fees already set to ${formatEther(currentFees)}`);
         }
@@ -172,7 +172,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         if (currentDao !== cfg.daoAddress) {
             console.info(`${pool.poolName}: dao set to ${currentDao}, setting to ${cfg.daoAddress}`);
             const daoTx = await poolContract.transferDAO(cfg.daoAddress);
-            await daoTx.wait();
+            await daoTx.wait(10);
         } else {
             console.info(`${pool.poolName}: dao already set to ${currentDao}`);
         }
@@ -183,7 +183,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         console.log("adding pools to advancer", advancerPools);
         const advancer = (await ethers.getContract("EpochAdvancer")) as EpochAdvancer;
         const tx = await advancer.addPools(advancerPools);
-        await tx.wait(3);
+        await tx.wait(10);
     }
     console.log("Done");
 };
@@ -196,7 +196,10 @@ const saveDeployment = async function (saveFn: any, name: string, address: strin
         abi: artifact.abi,
         address: address,
         bytecode: artifact.bytecode,
+        deployedBytecode: artifact.deployedBytecode,
         args: args,
         metadata: artifact.metadata,
+        solcInput: artifact.solcInput,
+        solcInputHash: artifact.solcInputHash,
     });
 };

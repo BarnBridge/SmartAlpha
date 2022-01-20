@@ -24,7 +24,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         from: deployer,
         args: [pools],
         log: true,
-        waitConfirmations: 3,
+        waitConfirmations: 5,
     });
 };
 export default func;
