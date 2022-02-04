@@ -141,7 +141,7 @@ describe("SmartAlpha - liquidity", function () {
 
     describe("Epoch advancer", () => {
         it("works", async () => {
-            const a = (await deployContract("EpochAdvancer", [[]])) as EpochAdvancer;
+            const a = (await deployContract("EpochAdvancer", [[], 400_000])) as EpochAdvancer;
 
             await expect(a.addPool(sa.address)).to.not.be.reverted;
             expect(await a.numberOfPools()).to.equal(1);
