@@ -17,7 +17,7 @@ describe("EpochAdvancer", () => {
     before(async function () {
         [deployer, happyPirate] = await ethers.getSigners();
 
-        advancer = await deployContract("EpochAdvancer", [[]]) as EpochAdvancer;
+        advancer = await deployContract("EpochAdvancer", [[], 400_000]) as EpochAdvancer;
     });
 
     beforeEach(async () => {
@@ -32,7 +32,7 @@ describe("EpochAdvancer", () => {
         it("can be deployed", async () => {
             const factory: ContractFactory = await ethers.getContractFactory("EpochAdvancer");
 
-            await expect(factory.deploy([]))
+            await expect(factory.deploy([], 400_000))
                 .to.not.be.reverted;
         });
 

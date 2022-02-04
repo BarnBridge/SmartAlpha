@@ -8,7 +8,10 @@ contract EpochAdvancer is Ownable {
     address[] public pools;
     uint256 public numberOfPools;
 
-    constructor(address[] memory addrs) {
+    uint256 public gasPerPool; // on mainnet it should be about 400_000
+
+    constructor(address[] memory addrs, uint256 _gasPerPool){
+        gasPerPool = _gasPerPool;
         if (addrs.length > 0) {
             addPools(addrs);
         }
@@ -50,12 +53,16 @@ contract EpochAdvancer is Ownable {
         }
     }
 
+    function setGasPerPool(uint256 _newGasPerPool) public onlyOwner {
+        gasPerPool = _newGasPerPool;
+    }
+
     function advanceEpochs() public {
         for (uint256 i = 0; i < pools.length; i++) {
             ISmartAlpha sa = ISmartAlpha(pools[i]);
 
             if (sa.getCurrentEpoch() > sa.epoch()) {
-                if (gasleft() < 400_000) {
+                if (gasleft() < gasPerPool) {
                     break;
                 }
 
@@ -67,7 +74,7 @@ contract EpochAdvancer is Ownable {
     function getPools() public view returns (address[] memory) {
         address[] memory result = new address[](pools.length);
 
-        for(uint256 i = 0; i < pools.length; i++) {
+        for (uint256 i = 0; i < pools.length; i++) {
             result[i] = pools[i];
         }
 
