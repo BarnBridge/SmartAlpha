@@ -21,11 +21,32 @@ contract EpochAdvancer is Ownable {
         numberOfPools++;
     }
 
+    function removePool(address poolAddress) public onlyOwner {
+        require(poolAddress != address(0), "invalid address");
+
+        for (uint256 i = 0; i < numberOfPools; i++) {
+            if (pools[i] == poolAddress) {
+                pools[i] = pools[pools.length - 1];
+                pools.pop();
+                numberOfPools--;
+                return;
+            }
+        }
+    }
+
     function addPools(address[] memory addrs) public onlyOwner {
         require(addrs.length > 0, "invalid array");
 
         for (uint256 i = 0; i < addrs.length; i++) {
             addPool(addrs[i]);
+        }
+    }
+
+    function removePools(address[] memory addrs) public onlyOwner {
+        require(addrs.length > 0, "invalid array");
+
+        for (uint256 i = 0; i < addrs.length; i++) {
+            removePool(addrs[i]);
         }
     }
 
@@ -41,6 +62,16 @@ contract EpochAdvancer is Ownable {
                 sa.advanceEpoch();
             }
         }
+    }
+
+    function getPools() public view returns (address[] memory) {
+        address[] memory result = new address[](pools.length);
+
+        for(uint256 i = 0; i < pools.length; i++) {
+            result[i] = pools[i];
+        }
+
+        return result;
     }
 
     function checkUpkeep(bytes calldata /* checkData */) external view returns (bool, bytes memory) {
