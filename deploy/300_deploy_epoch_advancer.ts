@@ -22,7 +22,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     await deploy("EpochAdvancer", {
         skipIfAlreadyDeployed: true,
         from: deployer,
-        args: [pools],
+        args: [pools, 400_000],
         log: true,
         waitConfirmations: 5,
     });
