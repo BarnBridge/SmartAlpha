@@ -27,6 +27,7 @@ interface PoolSettings {
 
 const zeroPercent = BigNumber.from(0);
 const pointFivePercent = tenPow18.mul(5).div(10).div(100);
+const almostFivePercent = tenPow18.mul(5).div(100).sub(1);
 
 export function settings (networkName: string): Settings {
     const cfg = {
@@ -76,7 +77,7 @@ export function settings (networkName: string): Settings {
             daoAddress: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
             guardianAddress: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
             feesOwner: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
-            feesPercent: pointFivePercent,
+            feesPercent: almostFivePercent,
             pools: [
                 {
                     poolName: "WETH-USD-1w",
@@ -140,7 +141,7 @@ export function settings (networkName: string): Settings {
             daoAddress: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
             guardianAddress: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
             feesOwner: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
-            feesPercent: pointFivePercent,
+            feesPercent: almostFivePercent,
             pools: [
                 {
                     poolName: "ETH-USD-1w",
@@ -212,7 +213,7 @@ export function settings (networkName: string): Settings {
             daoAddress: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
             guardianAddress: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
             feesOwner: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
-            feesPercent: pointFivePercent,
+            feesPercent: almostFivePercent,
             pools: [
                 {
                     poolName: "WETH-USD-1w",
@@ -302,7 +303,7 @@ export function settings (networkName: string): Settings {
             daoAddress: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
             guardianAddress: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
             feesOwner: "0x558Ef269Bcc4cc9F2e14E3f4301231fbeb85d95F",
-            feesPercent: pointFivePercent,
+            feesPercent: almostFivePercent,
             pools: [
                 {
                     poolName: "WETH-USD-1w",
