@@ -14,6 +14,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         from: deployer,
         args: [cfg.daoAddress],
         log: true,
+        waitConfirmations: 5,
     });
 };
 export default func;

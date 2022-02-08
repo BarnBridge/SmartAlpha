@@ -20,7 +20,7 @@ abstract contract Governed is SmartAlphaEvents {
     ISeniorRateModel public seniorRateModel;
     IAccountingModel public accountingModel;
 
-    uint256 public constant MAX_FEES_PERCENTAGE = 5 * 10 ** 16; // 5% * 10^18
+    uint256 public constant MAX_FEES_PERCENTAGE = 100 * 10 ** 16;
     address public feesOwner;
     uint256 public feesPercentage;
 
@@ -137,7 +137,7 @@ abstract contract Governed is SmartAlphaEvents {
         if (percentage > 0) {
             require(feesOwner != address(0), "no fees owner");
         }
-        require(percentage < MAX_FEES_PERCENTAGE, "max percentage exceeded");
+        require(percentage <= MAX_FEES_PERCENTAGE, "max percentage exceeded");
 
         emit SetFeesPercentage(feesPercentage, percentage);
 

@@ -1,6 +1,6 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import { ERC20, PoolFactory, SmartAlpha } from "../typechain";
+import { EpochAdvancer, ERC20, PoolFactory, SmartAlpha } from "../typechain";
 import * as time from "../test/helpers/time";
 import { settings } from "../settings/settings";
 import { BigNumber } from "ethers";
@@ -23,6 +23,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const oracleArtifact = await deployments.getExtendedArtifact("ChainlinkOracle");
     const oracleReverseArtifact = await deployments.getExtendedArtifact("ChainlinkOracleReverse");
     const tokenArtifact = await deployments.getExtendedArtifact("OwnableERC20");
+
+    const advancerPools = [];
 
     for (const pool of cfg.pools) {
         let poolAddress;
@@ -47,7 +49,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
                 pool.chainlinkOracleReverse,
             );
 
-            const receipt = await tx.wait(2);
+            const receipt = await tx.wait(10);
 
             const nr = await factory.numberOfPools();
             const p = await factory.pools(nr.sub(1));
@@ -108,6 +110,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
                 tokenArtifact,
             );
 
+            // add to epoch advancer
+            advancerPools.push(p.smartAlpha);
+
             // output info
             console.log(`
 {
@@ -147,7 +152,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         if (currentFeesOwner !== cfg.feesOwner) {
             console.info(`${pool.poolName}: fees owner set to ${currentFeesOwner}, setting to ${cfg.feesOwner}`);
             const feesOwnerTx = await poolContract.setFeesOwner(cfg.feesOwner);
-            await feesOwnerTx.wait();
+            await feesOwnerTx.wait(10);
         } else {
             console.info(`${pool.poolName}: fees owner already set to ${currentFeesOwner}`);
         }
@@ -157,7 +162,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         if (!currentFees.eq(cfg.feesPercent)) {
             console.info(`${pool.poolName}: fees set to ${formatEther(currentFees)}, setting to ${formatEther(cfg.feesPercent)}`);
             const feesTx = await poolContract.setFeesPercentage(cfg.feesPercent);
-            await feesTx.wait();
+            await feesTx.wait(10);
         } else {
             console.info(`${pool.poolName}: fees already set to ${formatEther(currentFees)}`);
         }
@@ -167,12 +172,19 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         if (currentDao !== cfg.daoAddress) {
             console.info(`${pool.poolName}: dao set to ${currentDao}, setting to ${cfg.daoAddress}`);
             const daoTx = await poolContract.transferDAO(cfg.daoAddress);
-            await daoTx.wait();
+            await daoTx.wait(10);
         } else {
             console.info(`${pool.poolName}: dao already set to ${currentDao}`);
         }
     }
 
+    // add new pools to advancer
+    if (advancerPools.length > 0) {
+        console.log("adding pools to advancer", advancerPools);
+        const advancer = (await ethers.getContract("EpochAdvancer")) as EpochAdvancer;
+        const tx = await advancer.addPools(advancerPools);
+        await tx.wait(10);
+    }
     console.log("Done");
 };
 export default func;
@@ -184,7 +196,10 @@ const saveDeployment = async function (saveFn: any, name: string, address: strin
         abi: artifact.abi,
         address: address,
         bytecode: artifact.bytecode,
+        deployedBytecode: artifact.deployedBytecode,
         args: args,
         metadata: artifact.metadata,
+        solcInput: artifact.solcInput,
+        solcInputHash: artifact.solcInputHash,
     });
 };
