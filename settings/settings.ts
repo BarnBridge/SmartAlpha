@@ -23,6 +23,7 @@ interface PoolSettings {
     chainlinkOracleReverse: boolean,
     epoch1Start: number,
     epochDuration: number,
+    overrideFeesPercent?: BigNumber,
 }
 
 const zeroPercent = BigNumber.from(0);
@@ -106,15 +107,6 @@ export function settings (networkName: string): Settings {
                     epoch1Start:  Date.UTC(2021, 9, 4, 14),
                     epochDuration: 7 * time.day,
                 },
-                {
-                    poolName: "AAVE-USD-1w",
-                    oracleAsset: "USD",
-                    poolToken: "0x63a72806098Bd3D9520cC43356dD78afe5D386D9",
-                    chainlinkAggregator: "0x3CA13391E9fb38a75330fb28f8cc2eB3D9ceceED",
-                    chainlinkOracleReverse: false,
-                    epoch1Start:  Date.UTC(2021, 9, 4, 14),
-                    epochDuration: 7 * time.day,
-                },
             ],
         },
         // https://docs.chain.link/docs/binance-smart-chain-addresses/#BSC%20Testnet
@@ -153,15 +145,6 @@ export function settings (networkName: string): Settings {
                     epochDuration: 7 * time.day,
                 },
                 {
-                    poolName: "BTCB-USD-1w",
-                    oracleAsset: "USD",
-                    poolToken: "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
-                    chainlinkAggregator: "0x264990fbd0A4796A3E3d8E37C4d5F87a3aCa5Ebf",
-                    chainlinkOracleReverse: false,
-                    epoch1Start:  Date.UTC(2021, 9, 11, 14),
-                    epochDuration: 7 * time.day,
-                },
-                {
                     poolName: "WBNB-USD-1w",
                     oracleAsset: "USD",
                     poolToken: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
@@ -177,15 +160,6 @@ export function settings (networkName: string): Settings {
                     chainlinkAggregator: "0xB6064eD41d4f67e353768aA239cA86f4F73665a1",
                     chainlinkOracleReverse: false,
                     epoch1Start:  Date.UTC(2021, 9, 11, 14),
-                    epochDuration: 7 * time.day,
-                },
-                {
-                    poolName: "FLOKI-USD-1w",
-                    oracleAsset: "USD",
-                    poolToken: "0x2b3f34e9d4b127797ce6244ea341a83733ddd6e4",
-                    chainlinkAggregator: "0x19018Cb4e5228A433CA0469e11E04AD47679B97D",
-                    chainlinkOracleReverse: false,
-                    epoch1Start: Date.UTC(2021, 11, 27, 14),
                     epochDuration: 7 * time.day,
                 },
             ],
@@ -247,15 +221,6 @@ export function settings (networkName: string): Settings {
                     oracleAsset: "USD",
                     poolToken: "0xf97f4df75117a78c1a5a0dbb814af92458539fb4",
                     chainlinkAggregator: "0x86E53CF1B870786351Da77A57575e79CB55812CB",
-                    chainlinkOracleReverse: false,
-                    epoch1Start:  Date.UTC(2021, 9, 18, 14),
-                    epochDuration: 7 * time.day,
-                },
-                {
-                    poolName: "SUSHI-USD-1w",
-                    oracleAsset: "USD",
-                    poolToken: "0xd4d42f0b6def4ce0383636770ef773390d85c61a",
-                    chainlinkAggregator: "0xb2A8BA74cbca38508BA1632761b56C897060147C",
                     chainlinkOracleReverse: false,
                     epoch1Start:  Date.UTC(2021, 9, 18, 14),
                     epochDuration: 7 * time.day,
@@ -433,15 +398,6 @@ export function settings (networkName: string): Settings {
                 },
                 {
                     poolName: "xSUSHI-USD-1w",
-                    oracleAsset: "USD",
-                    poolToken: "",
-                    chainlinkAggregator: "",
-                    chainlinkOracleReverse: false,
-                    epoch1Start: Date.UTC(0, 0, 0, 0),
-                    epochDuration: 7 * time.day,
-                },
-                {
-                    poolName: "FLOKI-USD-1w",
                     oracleAsset: "USD",
                     poolToken: "",
                     chainlinkAggregator: "",
