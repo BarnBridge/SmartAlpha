@@ -1,5 +1,5 @@
 import { ethers } from "hardhat";
-import { e18, e8, moveAtTimestamp, tenPow18, tenPow8 } from "./helpers/helpers";
+import { e18, e8, moveAtTimestamp, tenPow8 } from "./helpers/helpers";
 import { deployContract } from "./helpers/deploy";
 import {
     AccountingModel,
@@ -13,7 +13,7 @@ import {
 import * as time from "./helpers/time";
 import { BigNumber, Signer } from "ethers";
 import { expect } from "chai";
-import { start } from "repl";
+import exp from "constants";
 
 describe("SmartAlphaLoupe", function () {
     let snapshotId: any;
@@ -157,6 +157,114 @@ describe("SmartAlphaLoupe", function () {
 
             expect(estimated.juniorLiquidity.gt(amount.mul(2))).to.be.true;
             expect(estimated.seniorLiquidity.lt(amount)).to.be.true;
+        });
+
+        it("returns user positions", async () => {
+            await setupUser(happyPirate);
+            await expect(sa.connect(happyPirate).depositJunior(amount)).to.not.be.reverted;
+
+            await setupUser(happyPirate);
+            await expect(sa.connect(happyPirate).depositSenior(amount)).to.not.be.reverted;
+
+            await oracle.setPrice(e8(1));
+
+            let positions = await loupe.callStatic.userPositions([sa.address], happyPirateAddress);
+            let pos = positions[0];
+
+            expect(pos.pool).to.equal(sa.address);
+            expect(pos.juniorTokenBalance).to.equal(0);
+            expect(pos.seniorTokenBalance).to.equal(0);
+            expect(pos.estimatedJuniorTokenPrice).to.equal(e18(1));
+            expect(pos.estimatedSeniorTokenPrice).to.equal(e18(1));
+            expect(pos.poolTokenPriceInQuoteAsset).to.equal(e8(1));
+            expect(pos.redeemableJuniorTokens).to.equal(0);
+            expect(pos.redeemableSeniorTokens).to.equal(0);
+            expect(pos.redeemableJuniorUnderlying).to.equal(0);
+            expect(pos.redeemableSeniorUnderlying).to.equal(0);
+            expect(pos.juniorEntryQueue.epoch).to.equal(0);
+            expect(pos.juniorEntryQueue.amount).to.equal(amount);
+            expect(pos.seniorEntryQueue.epoch).to.equal(0);
+            expect(pos.seniorEntryQueue.amount).to.equal(amount);
+            expect(pos.juniorExitQueue.epoch).to.equal(0);
+            expect(pos.juniorExitQueue.amount).to.equal(0);
+            expect(pos.seniorExitQueue.epoch).to.equal(0);
+            expect(pos.seniorExitQueue.amount).to.equal(0);
+
+            expect(pos.enteringJuniorUnderlying).to.equal(amount);
+            expect(pos.enteringSeniorUnderlying).to.equal(amount);
+
+            await moveAtEpoch(1);
+
+            positions = await loupe.callStatic.userPositions([sa.address], happyPirateAddress);
+            pos = positions[0];
+
+            expect(pos.redeemableJuniorTokens).to.equal(amount);
+            expect(pos.enteringJuniorUnderlying).to.equal(0);
+            expect(pos.redeemableSeniorTokens).to.equal(amount);
+            expect(pos.enteringSeniorUnderlying).to.equal(0);
+
+            // redeem junior tokens
+            await expect(sa.connect(happyPirate).redeemJuniorTokens()).to.not.be.reverted;
+
+            positions = await loupe.callStatic.userPositions([sa.address], happyPirateAddress);
+            pos = positions[0];
+
+            expect(pos.juniorTokenBalance).to.equal(amount);
+            expect(pos.redeemableJuniorTokens).to.equal(0);
+            expect(pos.juniorEntryQueue.amount).to.equal(0);
+
+            // redeem senior position
+            await expect(sa.connect(happyPirate).redeemSeniorTokens()).to.not.be.reverted;
+
+            positions = await loupe.callStatic.userPositions([sa.address], happyPirateAddress);
+            pos = positions[0];
+
+            expect(pos.seniorTokenBalance).to.equal(amount);
+            expect(pos.redeemableSeniorTokens).to.equal(0);
+            expect(pos.seniorEntryQueue.amount).to.equal(0);
+
+            // change token price
+            await oracle.setPrice(e8(2));
+
+            positions = await loupe.callStatic.userPositions([sa.address], happyPirateAddress);
+            pos = positions[0];
+
+            expect(pos.poolTokenPriceInQuoteAsset).to.equal(e8(2));
+            expect(pos.estimatedJuniorTokenPrice).to.not.equal(e18(1));
+            expect(pos.estimatedSeniorTokenPrice).to.not.equal(e18(1));
+
+            // exit position
+            await expect(sa.connect(happyPirate).exitJunior(amount)).to.not.be.reverted;
+
+            positions = await loupe.callStatic.userPositions([sa.address], happyPirateAddress);
+            pos = positions[0];
+
+            expect(pos.juniorTokenBalance).to.equal(0);
+            expect(pos.juniorExitQueue.amount).to.equal(amount);
+            expect(pos.juniorExitQueue.epoch).to.equal(1);
+            expect(pos.exitingJuniorTokens).to.equal(amount);
+
+            // exit senior position
+            await expect(sa.connect(happyPirate).exitSenior(amount)).to.not.be.reverted;
+
+            positions = await loupe.callStatic.userPositions([sa.address], happyPirateAddress);
+            pos = positions[0];
+
+            expect(pos.seniorTokenBalance).to.equal(0);
+            expect(pos.seniorExitQueue.amount).to.equal(amount);
+            expect(pos.seniorExitQueue.epoch).to.equal(1);
+            expect(pos.exitingSeniorTokens).to.equal(amount);
+
+            // move at next epoch
+            await moveAtEpoch(2);
+
+            positions = await loupe.callStatic.userPositions([sa.address], happyPirateAddress);
+            pos = positions[0];
+
+            expect(pos.redeemableJuniorUnderlying).to.not.equal(0);
+            expect(pos.exitingJuniorTokens).to.equal(0);
+            expect(pos.redeemableSeniorUnderlying).to.not.equal(0);
+            expect(pos.exitingSeniorTokens).to.equal(0);
         });
     });
 

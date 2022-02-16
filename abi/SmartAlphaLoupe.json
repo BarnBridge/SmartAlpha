@@ -61,6 +61,170 @@
   {
     "inputs": [
       {
+        "internalType": "address[]",
+        "name": "pools",
+        "type": "address[]"
+      },
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "userPositions",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "pool",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "juniorTokenBalance",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "seniorTokenBalance",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "estimatedJuniorTokenPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "estimatedSeniorTokenPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "poolTokenPriceInQuoteAsset",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "enteringJuniorUnderlying",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "enteringSeniorUnderlying",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "redeemableJuniorTokens",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "redeemableSeniorTokens",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "exitingJuniorTokens",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "exitingSeniorTokens",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "redeemableJuniorUnderlying",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "redeemableSeniorUnderlying",
+            "type": "uint256"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "epoch",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct SmartAlphaLoupe.QueuePosition",
+            "name": "juniorEntryQueue",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "epoch",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct SmartAlphaLoupe.QueuePosition",
+            "name": "seniorEntryQueue",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "epoch",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct SmartAlphaLoupe.QueuePosition",
+            "name": "juniorExitQueue",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "epoch",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct SmartAlphaLoupe.QueuePosition",
+            "name": "seniorExitQueue",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct SmartAlphaLoupe.UserPosition[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "smartAlphaAddress",
         "type": "address"

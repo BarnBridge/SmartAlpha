@@ -17,3 +17,4 @@ typechain/
 
 scripts/interact.ts
 scripts/model.ts
+scripts/interact-loupe.ts
