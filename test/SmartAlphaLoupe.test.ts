@@ -13,7 +13,6 @@ import {
 import * as time from "./helpers/time";
 import { BigNumber, Signer } from "ethers";
 import { expect } from "chai";
-import exp from "constants";
 
 describe("SmartAlphaLoupe", function () {
     let snapshotId: any;
