@@ -1,6 +1,6 @@
 import { ethers } from "hardhat";
 import { deployContract } from "./helpers/deploy";
-import { AggregatorV3Mock, ChainlinkOracle, ChainlinkOracleReverse } from "../typechain";
+import { AggregatorV3Mock, ChainlinkOracle, ChainlinkOracleDouble, ChainlinkOracleReverse } from "../typechain";
 import { expect } from "chai";
 import { tenPow8, zeroAddress } from "./helpers/helpers";
 import { BigNumber, ContractFactory } from "ethers";
@@ -59,6 +59,31 @@ describe("ChainlinkOracle", () => {
 
             // returns ETH/BTC price scaled with 8 decimals
             expect(await oracle.getPrice()).to.equal(BigNumber.from("6894492"));
+        });
+    });
+
+    describe("double oracle", () => {
+        it("can be deployed", async () => {
+            const factory: ContractFactory = await ethers.getContractFactory("ChainlinkOracleDouble");
+
+            await expect(factory.deploy(zeroAddress, agg.address))
+                .to.be.revertedWith("oracle cannot be 0x0");
+            await expect(factory.deploy(agg.address, zeroAddress))
+                .to.be.revertedWith("oracle cannot be 0x0");
+        });
+
+        it("returns the price combined from the 2 oracles", async () => {
+            const agg2 = (await deployContract("AggregatorV3Mock")) as AggregatorV3Mock;
+
+            const oracle = (await deployContract("ChainlinkOracleDouble", [agg.address, agg2.address])) as ChainlinkOracleDouble;
+
+            await agg.setDecimals(18);
+            await agg2.setDecimals(8);
+
+            await agg.setAnswer(BigNumber.from("6721907699822956"));
+            await agg2.setAnswer(BigNumber.from("402011783661"));
+
+            expect(await oracle.getPrice()).to.equal(BigNumber.from("2702286104"));
         });
     });
 
