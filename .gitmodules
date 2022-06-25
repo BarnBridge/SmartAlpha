@@ -1,3 +1,0 @@
-[submodule "docs/templates"]
-	path = docs/templates
-	url = git@github.com:tzapu/solidity-docgen-template.git
